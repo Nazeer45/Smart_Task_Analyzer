@@ -303,3 +303,37 @@ cd backend
 python manage.py test
 ```
 
+---
+
+## ⏱ Time Breakdown (Approx.)
+
+- Backend setup: 20–30 min  
+- Algorithm design: 45–60 min  
+- API implementation: 30–40 min  
+- Unit tests: 20–30 min  
+- Frontend: 60–90 min  
+- Manual testing: 20–30 min  
+- Documentation: 20–30 min
+
+---
+
+## 🏆 Bonus Challenges
+
+| Feature | Status |
+|--------|--------|
+| Dependency graph | ❌ Not implemented |
+| Weekend/holiday intelligence | ❌ Not implemented |
+| Eisenhower matrix | ❌ Not implemented |
+| Adaptive weights | ❌ Not implemented |
+| Unit tests | ✅ Implemented |
+
+---
+
+## 🔮 Future Improvements
+
+- Dependency graph visualization  
+- Smarter urgency (skip weekends/holidays)  
+- Eisenhower matrix (urgent vs important)  
+- Persistent storage + auth  
+- Adaptive learning system  
+- Calendar integration  
