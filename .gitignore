@@ -1,1 +1,45 @@
-.vscode
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+venv/
+env/
+*/venv/
+*/env/
+
+# Django stuff
+db.sqlite3
+*.sqlite3
+*.sqlite3-journal
+
+# Don't ignore migrations folder globally.
+
+# VS Code
+.vscode/
+
+# Byte-compiled / optimized / DLL files
+*.pyc
+*.pyo
+
+# Local settings
+.env
+*.env
+
+# macOS / Windows junk
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Django caching
+*.cache
