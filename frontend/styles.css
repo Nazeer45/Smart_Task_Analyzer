@@ -1,0 +1,95 @@
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f3f4f6;
+  margin: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background: #fff;
+}
+
+h1 {
+  margin-bottom: 0.25rem;
+}
+
+section {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+input, select, textarea, button {
+  font: inherit;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+#tasksList .task,
+#results .task-result {
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.task-result.high {
+  border-left: 4px solid #ef4444;
+  background: #fef2f2;
+}
+
+.task-result.medium {
+  border-left: 4px solid #f59e0b;
+  background: #fffbeb;
+}
+
+.task-result.low {
+  border-left: 4px solid #10b981;
+  background: #ecfdf5;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  margin-left: 0.5rem;
+}
+
+.badge.high {
+  background: #ef4444;
+  color: white;
+}
+
+.badge.medium {
+  background: #f59e0b;
+  color: #111827;
+}
+
+.badge.low {
+  background: #10b981;
+  color: white;
+}
+
+.error {
+  color: #b91c1c;
+  margin-top: 0.5rem;
+}

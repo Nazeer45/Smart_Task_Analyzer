@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Smart Task Analyzer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Smart Task Analyzer</h1>
+    <p>Prioritize tasks using urgency, importance, effort and dependencies.</p>
+
+    <!-- Strategy toggle -->
+    <section>
+      <h2>Strategy</h2>
+      <select id="strategySelect">
+        <option value="smart_balance">Smart Balance</option>
+        <option value="fastest_wins">Fastest Wins</option>
+        <option value="high_impact">High Impact</option>
+        <option value="deadline_driven">Deadline Driven</option>
+      </select>
+    </section>
+
+    <!-- Input form -->
+    <section>
+      <h2>Add Task</h2>
+      <form id="taskForm">
+        <label>Title
+          <input type="text" id="title" required />
+        </label>
+        <label>Due date/time
+          <input type="datetime-local" id="dueDate" required />
+        </label>
+        <label>Estimated hours
+          <input type="number" id="hours" min="0.25" step="0.25" required />
+        </label>
+        <label>Importance (1–10)
+          <input type="number" id="importance" min="1" max="10" value="5" required />
+        </label>
+        <label>Dependencies (IDs, comma-separated)
+          <input type="text" id="dependencies" placeholder="e.g. 1,2" />
+        </label>
+        <button type="submit">Add task</button>
+      </form>
+    </section>
+
+    <!-- Bulk JSON input -->
+    <section>
+      <h2>Bulk JSON input</h2>
+      <textarea id="bulkJson" rows="8" placeholder='[{"id":1,"title":"Fix bug","due_date":"2025-12-01T10:00:00","estimated_hours":3,"importance":8,"dependencies":[]}]'></textarea>
+      <button id="bulkAddBtn">Add from JSON</button>
+    </section>
+
+    <!-- Current tasks -->
+    <section>
+      <h2>Current tasks</h2>
+      <div id="tasksList"></div>
+      <button id="analyzeBtn">Analyze & Sort</button>
+      <button id="suggestBtn">Suggest Top 3</button>
+    </section>
+
+    <!-- Results -->
+    <section>
+      <h2>Results</h2>
+      <div id="results"></div>
+      <div id="error" class="error"></div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
