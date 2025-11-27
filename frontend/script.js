@@ -19,6 +19,7 @@ taskForm.addEventListener("submit", (e) => {
   addSingleTask();
 });
 
+
 bulkAddBtn.addEventListener("click", addBulkTasks);
 analyzeBtn.addEventListener("click", analyzeTasks);
 suggestBtn.addEventListener("click", suggestTasks);
