@@ -1,8 +1,8 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from backend.tasks.scoring import TaskScorer
-from backend.tasks.serializers import TaskListSerializer
+from .scoring import TaskScorer
+from .serializers import TaskListSerializer
 
 @api_view(['POST'])
 def analyze_tasks(request):
@@ -20,9 +20,13 @@ def suggest_tasks(request):
     serializer = TaskListSerializer(data=request.data)
     if not serializer.is_valid():
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    data = serializer.validated_data
     scorer = TaskScorer()
-    all_scored = scorer.score_all_tasks(serializer.validated_data['tasks'])
+    all_scored = scorer.score_all_tasks(data['tasks'])
+    top_tasks = all_scored[:3]
     return Response({
-        'suggested_tasks': all_scored[:3],
-        'reason': 'Top 3 tasks picked for today based on priority.'
-    })
+        'suggested_tasks': top_tasks,
+        'reason': 'Top 3 tasks picked for today based on their urgency, importance, effort and dependencies.'
+    },
+    status=status.HTTP_200_OK
+    )

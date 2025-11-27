@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.utils import timezone
 import math
 
 class TaskScorer:
@@ -42,18 +43,22 @@ class TaskScorer:
         return False
 
     def calculate_urgency(self, due_date):
-        now = datetime.now()
-        days = (due_date - now).days
-        if days < 0:
-            return min(10, 10 + abs(days) * 0.5)
-        elif days <= 1:
+        now = timezone.now()
+        if timezone.is_naive(due_date):
+            due_date = timezone.make_aware(due_date, timezone.get_current_timezone())
+        days_until_due = (due_date - now).days
+
+        if days_until_due < 0:
+            return 10  # overdue → max urgency
+        elif days_until_due <= 1:
             return 10
-        elif days <= 3:
-            return 9 - (days - 1)
-        elif days <= 7:
-            return 7 - ((days - 3) / 4)
+        elif days_until_due <= 3:
+            return 9 - (days_until_due - 1)
+        elif days_until_due <= 7:
+            return 7 - ((days_until_due - 3) / 4)
         else:
-            return max(0, 5 - math.log(days - 6))
+            return max(0, 5 - math.log(days_until_due - 6))
+
 
     def calculate_effort(self, hours):
         if hours <= 0:
@@ -72,10 +77,13 @@ class TaskScorer:
         return min(10, count * 2)
 
     def score_task(self, task, tasks):
-        due_date = (
-            datetime.fromisoformat(task['due_date'])
-            if isinstance(task['due_date'], str) else task['due_date']
-        )
+        due_raw = task['due_date']
+        
+        if isinstance(due_raw, str):
+            due_date = datetime.fromisoformat(due_raw)
+        else:
+            due_date = due_raw
+            
         urgency = self.calculate_urgency(due_date)
         importance = task['importance']
         effort = self.calculate_effort(task['estimated_hours'])
@@ -92,6 +100,37 @@ class TaskScorer:
         scored = []
         for task in tasks:
             score, breakdown = self.score_task(task, tasks)
-            scored.append({**task, 'priority_score': score, 'score_breakdown': breakdown})
+            explanation = self._generate_explanation(task, breakdown)
+            scored.append({**task, 'priority_score': score, 'score_breakdown': breakdown, 'explanation': explanation})
         scored.sort(key=lambda x: x['priority_score'], reverse=True)
         return scored
+
+    def _generate_explanation(self, task, breakdown):
+        parts = []
+
+        # Urgency-based messages
+        if breakdown['urgency'] >= 9:
+            parts.append("High urgency (due very soon)")
+        elif breakdown['urgency'] >= 7:
+            parts.append("Moderate urgency")
+
+        # Importance-based messages
+        if breakdown['importance'] >= 8:
+            parts.append("Very important task")
+        elif breakdown['importance'] >= 6:
+            parts.append("Important task")
+
+        # Effort-based messages
+        if breakdown['effort'] >= 8:
+            parts.append("Quick win (low effort)")
+        elif breakdown['effort'] <= 3:
+            parts.append("High effort")
+
+        # Dependency-based messages
+        if breakdown['dependency'] >= 4:
+            parts.append("Blocks other tasks")
+
+        if not parts:
+            return "Moderate priority based on current factors"
+
+        return " • ".join(parts)

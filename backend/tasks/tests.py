@@ -17,7 +17,6 @@ class ScoringTests(TestCase):
             'dependencies': []
         }
         score, breakdown = self.scorer.score_task(task, [task])
-        # self.assertTrue(breakdown['urgency'] > 10)  # Bonus for overdue
         self.assertGreaterEqual(breakdown['urgency'], 10)  # Bonus for overdue
 
     def test_quick_win(self):
